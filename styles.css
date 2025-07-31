@@ -1581,11 +1581,17 @@ body {
 
         .form-row .form-group {
             flex: none;
+            width: 100%;
+        }
+
+        .form-group {
+            width: 100%;
         }
     }
 
     .form-group {
         margin-bottom: 0;
+        width: 100%;
     }
 
     .form-group label {
@@ -1607,6 +1613,7 @@ body {
         background: var(--bg-secondary);
         color: var(--text-primary);
         transition: all 0.2s ease;
+        box-sizing: border-box;
     }
 
     .form-group input:focus,
