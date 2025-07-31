@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FuturTask - Gestionnaire de Tâches Futuriste</title>
+
+    <!-- Métadonnées PWA -->
+    <meta
+      name="description"
+      content="Application moderne de gestion de tâches avec interface futuriste"
+    />
+    <meta name="theme-color" content="#00ff88" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="FuturTask" />
+
+    <!-- Icônes PWA -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0iIzAwMEZGNTgiLz4KPHBhdGggZD0iTTE2IDhDMTEuNiA4IDggMTEuNiA4IDE2UzExLjYgMjQgMTYgMjRTMjQgMjAuNCAyNCAxNlMyMC40IDggMTYgOFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xNiAxMkMxMy44IDEyIDEyIDEzLjggMTIgMTZTMzMuOCAyMCAxNiAyMFMyMCAxOC4yIDIwIDE2UzE4LjIgMTIgMTYgMTJaIiBmaWxsPSIjMDAwRkY1OCIvPgo8L3N2Zz4K"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9IiMwMDBGRjU4Ii8+CjxwYXRoIGQ9Ik05NiA0OEM2OS41IDQ4IDQ4IDY5LjUgNDggOTZTNjkuNSAxNDQgOTYgMTQ0UzE0NCAxMjIuNSAxNDQgOTZTMTIyLjUgNDggOTYgNDhaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNOTYgNzJDODQuNCA3MiA3MiA4NC40IDcyIDk2Uzg0LjQgMTIwIDk2IDEyMFMxMjAgMTA3LjYgMTIwIDk2UzEwNy42IDcyIDk2IDcyWiIgZmlsbD0iIzAwMEZGNTgiLz4KPC9zdmc+Cg=="
+    />
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="styles.css" as="style" />
+    <link rel="preload" href="script.js" as="script" />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Header avec titre et toggle theme -->
+      <header class="app-header">
+        <div class="header-content">
+          <h1 class="app-title">
+            <span class="title-icon">⚡</span>
+            FuturTask
+          </h1>
+          <div class="header-actions">
+            <a href="stats.html" class="nav-btn">
+              <span class="btn-icon">📊</span>
+              Statistiques
+            </a>
+
+            <button class="theme-toggle" id="themeToggle">
+              <span class="theme-icon">🌙</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Indicateur de progression -->
+      <div class="progress-section">
+        <div class="progress-info">
+          <span class="progress-text">Progression</span>
+          <span class="progress-percentage" id="progressPercentage">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="task-stats">
+          <span class="stat-item">
+            <span class="stat-number" id="totalTasks">0</span>
+            <span class="stat-label">Total</span>
+          </span>
+          <span class="stat-item">
+            <span class="stat-number" id="completedTasks">0</span>
+            <span class="stat-label">Terminées</span>
+          </span>
+          <span class="stat-item">
+            <span class="stat-number" id="pendingTasks">0</span>
+            <span class="stat-label">En attente</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Section d'ajout de tâche -->
+      <div class="add-task-section">
+        <h2 class="section-title">Nouvelle Tâche</h2>
+        <form class="task-form" id="taskForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskTitle">Titre</label>
+              <input
+                type="text"
+                id="taskTitle"
+                placeholder="Entrez le titre de la tâche"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="taskDate">Date</label>
+              <input type="date" id="taskDate" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="taskDescription">Description</label>
+            <textarea
+              id="taskDescription"
+              placeholder="Décrivez votre tâche..."
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="taskTags">Tags</label>
+            <input
+              type="text"
+              id="taskTags"
+              placeholder="Ex: #urgent #travail #personnel"
+            />
+            <small class="form-hint">Séparez les tags par des espaces</small>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskPriority">Priorité</label>
+              <select id="taskPriority">
+                <option value="low">Basse</option>
+                <option value="medium" selected>Moyenne</option>
+                <option value="high">Haute</option>
+                <option value="urgent">Urgente</option>
+              </select>
+            </div>
+
+            <button type="submit" class="add-btn">
+              <span class="btn-icon">+</span>
+              Ajouter
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Section de recherche -->
+      <div class="search-section">
+        <h2 class="section-title">Recherche</h2>
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Rechercher dans les titres, descriptions et tags..."
+              class="search-input"
+            />
+            <span class="search-icon">🔍</span>
+          </div>
+          <div class="search-results-info" id="searchResultsInfo"></div>
+        </div>
+      </div>
+
+      <!-- Section des filtres -->
+      <div class="filters-section">
+        <h2 class="section-title">Filtres</h2>
+        <div class="filters-container">
+          <div class="filter-group">
+            <label for="yearFilter">Année</label>
+            <select id="yearFilter">
+              <option value="">Toutes les années</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="monthFilter">Mois</label>
+            <select id="monthFilter">
+              <option value="">Tous les mois</option>
+              <option value="01">Janvier</option>
+              <option value="02">Février</option>
+              <option value="03">Mars</option>
+              <option value="04">Avril</option>
+              <option value="05">Mai</option>
+              <option value="06">Juin</option>
+              <option value="07">Juillet</option>
+              <option value="08">Août</option>
+              <option value="09">Septembre</option>
+              <option value="10">Octobre</option>
+              <option value="11">Novembre</option>
+              <option value="12">Décembre</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="statusFilter">Statut</label>
+            <select id="statusFilter">
+              <option value="">Tous les statuts</option>
+              <option value="pending">En attente</option>
+              <option value="completed">Terminées</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="tagFilter">Tags</label>
+            <select id="tagFilter">
+              <option value="">Tous les tags</option>
+            </select>
+          </div>
+          <button class="clear-filters-btn" id="clearFilters">
+            <span class="btn-icon">🔄</span>
+            Effacer les filtres
+          </button>
+        </div>
+      </div>
+
+      <!-- Section des tâches -->
+      <div class="tasks-section">
+        <div class="tasks-header">
+          <h2 class="section-title">Mes Tâches</h2>
+          <div class="tasks-actions">
+            <button class="delete-all-btn" id="deleteAllBtn">
+              <span class="btn-icon">🗑️</span>
+              Supprimer tout
+            </button>
+          </div>
+        </div>
+        <div class="tasks-container" id="tasksContainer">
+          <!-- Les tâches seront ajoutées dynamiquement ici -->
+          <div class="empty-state" id="emptyState">
+            <div class="empty-icon">📝</div>
+            <h3>Aucune tâche</h3>
+            <p>Commencez par ajouter votre première tâche !</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de confirmation -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="modalTitle">Confirmation</h3>
+        </div>
+        <div class="modal-body">
+          <p id="modalMessage">
+            Êtes-vous sûr de vouloir effectuer cette action ?
+          </p>
+        </div>
+        <div class="modal-actions">
+          <button class="modal-btn cancel-btn" id="modalCancel">Annuler</button>
+          <button class="modal-btn confirm-btn" id="modalConfirm">
+            Confirmer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal d'édition de tâche -->
+    <div class="modal-overlay" id="editModalOverlay">
+      <div class="modal edit-modal">
+        <div class="modal-header">
+          <h3>Modifier la tâche</h3>
+          <button class="close-btn" id="closeEditModal">×</button>
+        </div>
+        <div class="modal-body">
+          <form class="edit-form" id="editForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="editTaskTitle">Titre</label>
+                <input type="text" id="editTaskTitle" required />
+              </div>
+              <div class="form-group">
+                <label for="editTaskDate">Date</label>
+                <input type="date" id="editTaskDate" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="editTaskDescription">Description</label>
+              <textarea id="editTaskDescription" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="editTaskTags">Tags</label>
+              <input
+                type="text"
+                id="editTaskTags"
+                placeholder="Ex: #urgent #travail #personnel"
+              />
+              <small class="form-hint">Séparez les tags par des espaces</small>
+            </div>
+            <div class="form-group">
+              <label for="editTaskPriority">Priorité</label>
+              <select id="editTaskPriority">
+                <option value="low">Basse</option>
+                <option value="medium">Moyenne</option>
+                <option value="high">Haute</option>
+                <option value="urgent">Urgente</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editTaskStatus">Statut</label>
+              <select id="editTaskStatus">
+                <option value="pending">En attente</option>
+                <option value="completed">Terminée</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-actions">
+          <button class="modal-btn cancel-btn" id="cancelEdit">Annuler</button>
+          <button class="modal-btn confirm-btn" id="saveEdit">
+            Sauvegarder
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

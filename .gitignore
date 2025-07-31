@@ -1,0 +1,21 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers d'éditeur
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dossiers temporaires
+tmp/
+temp/
+
+# Fichiers de sauvegarde
+*.bak
+*.backup 

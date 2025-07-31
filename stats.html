@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Statistiques - FuturTask</title>
+
+    <!-- Métadonnées PWA -->
+    <meta
+      name="description"
+      content="Statistiques et analyses de productivité - FuturTask"
+    />
+    <meta name="theme-color" content="#00ff88" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="FuturTask Stats" />
+
+    <!-- Icônes PWA -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0iIzAwMEZGNTgiLz4KPHBhdGggZD0iTTE2IDhDMTEuNiA4IDggMTEuNiA4IDE2UzExLjYgMjQgMTYgMjRTMjQgMjAuNCAyNCAxNlMyMC40IDggMTYgOFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xNiAxMkMxMy44IDEyIDEyIDEzLjggMTIgMTZTMzMuOCAyMCAxNiAyMFMyMCAxOC4yIDIwIDE2UzE4LjIgMTIgMTYgMTJaIiBmaWxsPSIjMDAwRkY1OCIvPgo8L3N2Zz4K"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9IiMwMDBGRjU4Ii8+CjxwYXRoIGQ9Ik05NiA0OEM2OS41IDQ4IDQ4IDY5LjUgNDggOTZTNjkuNSAxNDQgOTYgMTQ0UzE0NCAxMjIuNSAxNDQgOTZTMTIyLjUgNDggOTYgNDhaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNOTYgNzJDODQuNCA3MiA3MiA4NC40IDcyIDk2Uzg0LjQgMTIwIDk2IDEyMFMxMjAgMTA3LjYgMTIwIDk2UzEwNy42IDcyIDk2IDcyWiIgZmlsbD0iIzAwMEZGNTgiLz4KPC9zdmc+Cg=="
+    />
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Préchargement des ressources critiques -->
+    <link rel="preload" href="styles.css" as="style" />
+    <link rel="preload" href="stats.js" as="script" />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Header avec navigation -->
+      <header class="app-header">
+        <div class="header-content">
+          <h1 class="app-title">
+            <span class="title-icon">📊</span>
+            Statistiques FuturTask
+          </h1>
+          <div class="header-actions">
+            <a href="index.html" class="nav-btn">
+              <span class="btn-icon">🏠</span>
+              Accueil
+            </a>
+            <button class="theme-toggle" id="themeToggle">
+              <span class="theme-icon">🌙</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Section de résumé -->
+      <div class="summary-section">
+        <div class="summary-cards">
+          <div class="summary-card">
+            <div class="summary-icon">📝</div>
+            <div class="summary-content">
+              <span class="summary-value" id="totalTasks">0</span>
+              <span class="summary-label">Total Tâches</span>
+            </div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-icon">✅</div>
+            <div class="summary-content">
+              <span class="summary-value" id="completedTasks">0</span>
+              <span class="summary-label">Terminées</span>
+            </div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-icon">⏳</div>
+            <div class="summary-content">
+              <span class="summary-value" id="pendingTasks">0</span>
+              <span class="summary-label">En Attente</span>
+            </div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-icon">⚠️</div>
+            <div class="summary-content">
+              <span class="summary-value" id="overdueTasks">0</span>
+              <span class="summary-label">En Retard</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section des graphiques -->
+      <div class="charts-section">
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3>Répartition par Priorité</h3>
+            <div class="chart-container">
+              <canvas id="priorityChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3>Évolution Mensuelle</h3>
+            <div class="chart-container">
+              <canvas id="monthlyChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3>Tags Populaires</h3>
+            <div class="chart-container">
+              <canvas id="tagsChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3>Performance</h3>
+            <div class="performance-metrics">
+              <div class="metric">
+                <span class="metric-value" id="completionRate">0%</span>
+                <span class="metric-label">Taux de complétion</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value" id="avgCompletionTime">0j</span>
+                <span class="metric-label">Temps moyen</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value" id="overdueRate">0%</span>
+                <span class="metric-label">Taux de retard</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section des détails -->
+      <div class="details-section">
+        <div class="details-grid">
+          <div class="details-card">
+            <h3>Tâches Récentes</h3>
+            <div class="recent-tasks" id="recentTasks">
+              <!-- Les tâches récentes seront ajoutées ici -->
+            </div>
+          </div>
+          <div class="details-card">
+            <h3>Top Tags</h3>
+            <div class="top-tags" id="topTags">
+              <!-- Les tags populaires seront ajoutés ici -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="stats.js"></script>
+  </body>
+</html>
