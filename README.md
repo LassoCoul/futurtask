@@ -33,6 +33,15 @@ Une application moderne de gestion de tâches avec une interface futuriste et de
 - **Interface intuitive** : Navigation claire et accessible
 - **Visibilité optimisée** : Contrastes parfaits dans les deux thèmes
 
+### 📝 **Formulaire de Nouvelle Tâche**
+
+- **Agencement responsive** : Adaptation intelligente selon la taille d'écran
+- **Desktop optimisé** : Titre+Date et Priorité+Bouton côte à côte
+- **Mobile optimisé** : Champs empilés en pleine largeur
+- **Proportions équilibrées** : Répartition 50/50 pour les éléments côte à côte
+- **Champs pleine largeur** : Tags et Description sur toute la largeur
+- **Interface intuitive** : Labels clairs et placeholders informatifs
+
 ## 🛠️ Technologies Utilisées
 
 - **HTML5** : Structure sémantique
@@ -140,6 +149,18 @@ L'application supporte deux thèmes avec mise à jour instantanée :
 Toutes les couleurs et styles sont configurables via les variables CSS dans `styles.css`.
 
 ## 🎨 Améliorations Récentes
+
+### **Formulaire de Nouvelle Tâche Optimisé**
+
+- **Agencement responsive** : Adaptation automatique selon l'écran
+- **Desktop (>768px)** : 
+  - Titre et Date côte à côte
+  - Description en pleine largeur
+  - Tags en pleine largeur
+  - Priorité et Bouton côte à côte (50/50)
+- **Mobile (≤768px)** : Tous les champs en pleine largeur
+- **Champs optimisés** : Largeur 100% avec box-sizing border-box
+- **Interface intuitive** : Labels clairs et placeholders informatifs
 
 ### **Visibilité Optimisée**
 

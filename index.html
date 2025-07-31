@@ -46,6 +46,30 @@
             FuturTask
           </h1>
           <div class="header-actions">
+            <!-- Sélecteur de profil -->
+            <div class="profile-selector">
+              <button class="profile-btn" id="profileBtn">
+                <span class="btn-icon">👤</span>
+                <span class="profile-name" id="currentProfileName">Profil</span>
+                <span class="btn-icon">▼</span>
+              </button>
+              <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-list" id="profileList">
+                  <!-- Les profils seront ajoutés ici dynamiquement -->
+                </div>
+                <div class="profile-actions">
+                  <button class="profile-action-btn" id="addProfileBtn">
+                    <span class="btn-icon">➕</span>
+                    Nouveau profil
+                  </button>
+                  <button class="profile-action-btn" id="manageProfilesBtn">
+                    <span class="btn-icon">⚙️</span>
+                    Gérer les profils
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <a href="stats.html" class="nav-btn">
               <span class="btn-icon">📊</span>
               Statistiques
@@ -59,7 +83,7 @@
       </header>
 
       <!-- Indicateur de progression -->
-      <div class="progress-section">
+      <div class="progress-section" id="progressSection">
         <div class="progress-info">
           <span class="progress-text">Progression</span>
           <span class="progress-percentage" id="progressPercentage">0%</span>
@@ -129,11 +153,12 @@
                 <option value="urgent">Urgente</option>
               </select>
             </div>
-
-            <button type="submit" class="add-btn">
-              <span class="btn-icon">+</span>
-              Ajouter
-            </button>
+            <div class="form-group">
+              <button type="submit" class="add-btn">
+                <span class="btn-icon">+</span>
+                Ajouter
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -301,6 +326,61 @@
           <button class="modal-btn confirm-btn" id="saveEdit">
             Sauvegarder
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de gestion des profils -->
+    <div class="modal-overlay" id="profileModalOverlay">
+      <div class="modal profile-modal">
+        <div class="modal-header">
+          <h3>Gestion des Profils</h3>
+          <button class="close-btn" id="closeProfileModal">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="profile-management">
+            <div class="profile-form">
+              <h4>Nouveau Profil</h4>
+              <form id="profileForm">
+                <div class="form-group">
+                  <label for="profileName">Nom du profil</label>
+                  <input
+                    type="text"
+                    id="profileName"
+                    placeholder="Ex: Travail, Personnel, Études"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="profileColor">Couleur du profil</label>
+                  <input type="color" id="profileColor" value="#00ff88" />
+                </div>
+                <div class="form-group">
+                  <label for="profileIcon">Icône du profil</label>
+                  <select id="profileIcon">
+                    <option value="👤">👤 Personnel</option>
+                    <option value="💼">💼 Travail</option>
+                    <option value="📚">📚 Études</option>
+                    <option value="🏠">🏠 Maison</option>
+                    <option value="🎯">🎯 Projets</option>
+                    <option value="⭐">⭐ Important</option>
+                  </select>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="modal-btn confirm-btn">
+                    Créer le profil
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="existing-profiles">
+              <h4>Profils existants</h4>
+              <div class="profiles-list" id="profilesList">
+                <!-- Les profils existants seront affichés ici -->
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

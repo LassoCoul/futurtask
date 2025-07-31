@@ -130,11 +130,11 @@ body {
 .progress-section {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 25px;
-    margin-bottom: 30px;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 25px;
     backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
     animation: slideInUp 0.6s ease-out 0.1s both;
 }
 
@@ -142,38 +142,38 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .progress-text {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text-secondary);
 }
 
 .progress-percentage {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: var(--accent-primary);
-    text-shadow: 0 0 10px var(--glow-color);
+    text-shadow: 0 0 8px var(--glow-color);
 }
 
 .progress-bar {
     width: 100%;
-    height: 12px;
+    height: 10px;
     background: var(--bg-tertiary);
-    border-radius: 10px;
+    border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--accent-primary), var(--accent-success));
-    border-radius: 10px;
+    border-radius: 8px;
     transition: width 0.5s ease;
-    box-shadow: 0 0 20px var(--glow-color);
+    box-shadow: 0 0 15px var(--glow-color);
     position: relative;
 }
 
@@ -191,27 +191,33 @@ body {
 .task-stats {
     display: flex;
     justify-content: space-around;
-    gap: 20px;
+    gap: 15px;
 }
 
 .stat-item {
     text-align: center;
     flex: 1;
+    padding: 8px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
 }
 
 .stat-number {
     display: block;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--accent-primary);
-    text-shadow: 0 0 10px var(--glow-color);
+    text-shadow: 0 0 8px var(--glow-color);
+    margin-bottom: 4px;
 }
 
 .stat-label {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
+    font-weight: 500;
 }
 
 /* Sections communes */
@@ -308,6 +314,8 @@ body {
     font-size: 1rem;
     transition: all 0.3s ease;
     outline: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .form-group input:focus,
@@ -1511,82 +1519,950 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .app-container {
-        padding: 15px;
+        padding: 10px;
+        max-width: 100%;
     }
-    
+
     .app-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        gap: 10px;
     }
-    
-    .form-row {
+
+    .title-icon {
+        font-size: 1.5rem;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+
+    .header-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .nav-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    /* Optimisation du formulaire mobile */
+    .add-task-section {
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .task-form {
+        display: flex;
         flex-direction: column;
         gap: 15px;
     }
-    
+
+    /* Form-row pour grand écran */
+    .form-row {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+    /* Surcharge pour mobile */
+    @media (max-width: 768px) {
+        .form-row {
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .form-row .form-group {
+            flex: none;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 0;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 16px; /* Évite le zoom sur iOS */
+        padding: 12px 15px;
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        transition: all 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    .form-hint {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 4px;
+        display: block;
+    }
+
+    /* Bouton d'ajout optimisé */
+    .add-btn {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-success));
+        border: none;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+        margin-top: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .add-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+    }
+
+    .add-btn:active {
+        transform: translateY(0);
+    }
+
+    /* Ajustement pour le bouton dans form-group */
+    .form-group .add-btn {
+        margin-top: 24px; /* Aligne avec le label du select */
+    }
+
     .filters-container {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
+        padding: 15px;
     }
-    
+
     .filter-group {
-        min-width: auto;
+        width: 100%;
     }
-    
+
+    .filter-group select {
+        font-size: 16px;
+        padding: 10px 12px;
+    }
+
+    .clear-filters-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
     .tasks-header {
         flex-direction: column;
         gap: 15px;
         align-items: stretch;
     }
-    
+
     .task-header {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .task-footer {
         flex-direction: column;
-        gap: 15px;
-        align-items: stretch;
+        gap: 10px;
     }
-    
+
     .task-actions {
         justify-content: center;
+        gap: 8px;
     }
-    
+
+    .task-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
     .modal {
-        margin: 20px;
-        padding: 20px;
+        width: 95%;
+        margin: 10px;
+        max-height: 90vh;
+        overflow-y: auto;
     }
-    
+
     .modal-actions {
         flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    /* Améliorations pour les cartes de tâches */
+    .task-card {
+        padding: 15px;
+        margin-bottom: 12px;
+    }
+
+    .task-title {
+        font-size: 1.1rem;
+        line-height: 1.4;
+    }
+
+    .task-description {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    /* Améliorations pour les statistiques */
+    .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .summary-card {
+        padding: 15px;
+    }
+
+    .summary-value {
+        font-size: 1.5rem;
+    }
+
+    .summary-label {
+        font-size: 0.8rem;
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .chart-card {
+        padding: 15px;
+        min-height: 300px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .details-card {
+        padding: 15px;
+    }
+
+    /* Améliorations pour les profils */
+    .profile-management {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .profile-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    .profile-name {
+        min-width: 60px;
+    }
+
+    .profile-dropdown {
+        min-width: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .profile-item {
+        padding: 10px 12px;
+    }
+
+    .profile-action-btn {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    /* Améliorations pour la barre de progression */
+    .progress-section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .progress-info {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .task-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .stat-item {
+        padding: 10px;
+        text-align: center;
+    }
+
+    /* Améliorations pour les notifications */
+    .notification-toast {
+        width: 95%;
+        left: 2.5%;
+        right: 2.5%;
+        font-size: 0.9rem;
+    }
+
+    /* Améliorations pour la recherche */
+    .search-input {
+        font-size: 16px;
+        padding: 12px 15px;
+    }
+
+    .search-results-info {
+        font-size: 0.85rem;
+        padding: 8px 12px;
     }
 }
 
 @media (max-width: 480px) {
+    .app-container {
+        padding: 8px;
+    }
+
     .app-title {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         flex-direction: column;
         text-align: center;
+        gap: 8px;
+    }
+
+    .title-icon {
+        font-size: 1.3rem;
+    }
+
+    .header-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .nav-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .profile-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Optimisation du formulaire pour très petits écrans */
+    .add-task-section {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+
+    .task-form {
         gap: 10px;
     }
-    
-    .task-stats {
+
+    /* Form-row en colonne sur très petits écrans */
+    .form-row {
+        gap: 8px;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 16px;
+        padding: 12px;
+        border-radius: 6px;
+    }
+
+    .form-group textarea {
+        min-height: 60px;
+    }
+
+    .form-hint {
+        font-size: 0.65rem;
+        margin-top: 2px;
+    }
+
+    .add-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+        margin-top: 5px;
+    }
+
+    .filters-container {
+        padding: 10px;
+    }
+
+    .filter-group select {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .clear-filters-btn {
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    .task-card {
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+
+    .task-title {
+        font-size: 1rem;
+    }
+
+    .task-description {
+        font-size: 0.85rem;
+    }
+
+    .task-actions {
         flex-direction: column;
+        gap: 8px;
+    }
+
+    .task-btn {
+        width: 100%;
+        padding: 10px;
+        justify-content: center;
+    }
+
+    .modal {
+        width: 98%;
+        margin: 5px;
+        padding: 15px;
+    }
+
+    .modal-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .modal-btn {
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    /* Statistiques sur très petits écrans */
+    .summary-cards {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .summary-card {
+        padding: 12px;
+    }
+
+    .summary-value {
+        font-size: 1.3rem;
+    }
+
+    .summary-label {
+        font-size: 0.75rem;
+    }
+
+    .chart-card {
+        padding: 12px;
+        min-height: 250px;
+    }
+
+    .details-card {
+        padding: 12px;
+    }
+
+    /* Barre de progression */
+    .progress-section {
+        padding: 8px;
+        margin-bottom: 15px;
+    }
+
+    .progress-info {
+        gap: 6px;
+        margin-bottom: 6px;
+    }
+
+    .progress-text {
+        font-size: 0.8rem;
+    }
+
+    .progress-percentage {
+        font-size: 0.9rem;
+    }
+
+    .progress-bar {
+        height: 6px;
+        margin-bottom: 8px;
+    }
+
+    .task-stats {
+        flex-direction: row;
+        gap: 4px;
+    }
+
+    .stat-item {
+        padding: 4px 6px;
+        border-radius: 4px;
+        flex: 1;
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
+    }
+
+    /* Option pour masquer complètement la progression sur très petits écrans */
+    .progress-section.compact {
+        padding: 6px;
+        margin-bottom: 10px;
+    }
+
+    .progress-section.compact .progress-info {
+        margin-bottom: 4px;
+    }
+
+    .progress-section.compact .progress-bar {
+        height: 4px;
+        margin-bottom: 6px;
+    }
+
+    .progress-section.compact .task-stats {
+        gap: 2px;
+    }
+
+    .progress-section.compact .stat-item {
+        padding: 3px 4px;
+        border-radius: 3px;
+    }
+
+    .progress-section.compact .stat-number {
+        font-size: 0.8rem;
+        margin-bottom: 1px;
+    }
+
+    .progress-section.compact .stat-label {
+        font-size: 0.55rem;
+    }
+
+    /* Option pour masquer complètement la progression */
+    .progress-section.hidden {
+        display: none;
+    }
+
+    /* Version intégrée dans le header */
+    .progress-section.inline {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+        backdrop-filter: none;
+    }
+
+    .progress-section.inline .progress-info {
+        margin-bottom: 8px;
+    }
+
+    .progress-section.inline .progress-bar {
+        height: 6px;
+        margin-bottom: 10px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .progress-section.inline .task-stats {
+        gap: 10px;
+    }
+
+    .progress-section.inline .stat-item {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 6px 8px;
+        border-radius: 6px;
+    }
+
+    .progress-section.inline .stat-number {
+        font-size: 1rem;
+    }
+
+    .progress-section.inline .stat-label {
+        font-size: 0.7rem;
+    }
+
+    /* Notifications */
+    .notification-toast {
+        width: 98%;
+        left: 1%;
+        right: 1%;
+        padding: 12px;
+        font-size: 0.85rem;
+    }
+
+    /* Profils */
+    .profile-dropdown {
+        min-width: 180px;
+        left: 0;
+        right: 0;
+        transform: none;
+    }
+
+    .profile-item {
+        padding: 8px 10px;
+    }
+
+    .profile-action-btn {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+    }
+
+    /* Recherche */
+    .search-input {
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    .search-results-info {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    /* Section vide */
+    .empty-state {
+        padding: 20px;
+    }
+
+    .empty-icon {
+        font-size: 3rem;
+    }
+
+    .empty-state h3 {
+        font-size: 1.2rem;
+    }
+
+    .empty-state p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Orientation paysage sur mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .app-container {
+        padding: 8px;
+    }
+
+    .header-content {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .app-title {
+        font-size: 1.6rem;
+        flex-direction: row;
+    }
+
+    .header-actions {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .nav-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .profile-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    /* Optimisation du formulaire en mode paysage */
+    .add-task-section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .task-form {
+        gap: 12px;
+    }
+
+    /* Form-row en colonne même en mode paysage sur mobile */
+    .form-row {
+        gap: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 0;
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 16px;
+        padding: 10px 12px;
+    }
+
+    .form-group textarea {
+        min-height: 70px;
+    }
+
+    .add-btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        margin-top: 8px;
+    }
+
+    .filters-container {
+        flex-direction: row;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .filter-group {
+        flex: 1;
+    }
+
+    .summary-cards {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+
+    .summary-card {
+        padding: 10px;
+    }
+
+    .summary-value {
+        font-size: 1.2rem;
+    }
+
+    .summary-label {
+        font-size: 0.7rem;
+    }
+
+    .charts-grid {
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
-    
-    .stat-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+
+    .chart-card {
+        min-height: 200px;
         padding: 10px;
-        background: var(--bg-tertiary);
-        border-radius: 10px;
     }
-    
+
+    .details-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .details-card {
+        padding: 10px;
+    }
+
+    .task-stats {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .stat-item {
+        flex: 1;
+        padding: 6px 8px;
+    }
+
     .stat-number {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+    }
+}
+
+/* Améliorations pour les écrans tactiles */
+@media (hover: none) and (pointer: coarse) {
+    .task-btn,
+    .nav-btn,
+    .profile-btn,
+    .modal-btn,
+    .add-btn,
+    .clear-filters-btn {
+        min-height: 44px; /* Taille minimale recommandée pour le touch */
+    }
+
+    /* Optimisations pour écrans tactiles */
+    .add-task-section {
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .task-form {
+        gap: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 0;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        min-height: 44px;
+        font-size: 16px;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 2px solid var(--border-color);
+        background: var(--bg-secondary);
+        transition: all 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        outline: none;
+    }
+
+    .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .add-btn {
+        min-height: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-success));
+        border: none;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+        margin-top: 15px;
+    }
+
+    .add-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+    }
+
+    .add-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 10px rgba(0, 255, 136, 0.3);
+    }
+
+    .task-card:hover {
+        transform: none; /* Désactive les effets hover sur mobile */
+    }
+
+    .summary-card:hover,
+    .chart-card:hover,
+    .details-card:hover {
+        transform: none;
+    }
+
+    .nav-btn:hover,
+    .profile-btn:hover,
+    .add-btn:hover,
+    .clear-filters-btn:hover {
+        transform: none;
+    }
+
+    /* Améliorations pour les interactions tactiles */
+    .task-card {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .task-btn,
+    .nav-btn,
+    .profile-btn,
+    .modal-btn,
+    .add-btn,
+    .clear-filters-btn {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    /* Feedback tactile */
+    .task-btn:active,
+    .nav-btn:active,
+    .profile-btn:active,
+    .modal-btn:active,
+    .add-btn:active,
+    .clear-filters-btn:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+
+    /* Amélioration de la lisibilité */
+    .task-title {
+        font-weight: 600;
+    }
+
+    .task-description {
+        line-height: 1.6;
+    }
+
+    /* Espacement amélioré pour les boutons */
+    .task-actions {
+        gap: 12px;
+    }
+
+    .header-actions {
+        gap: 12px;
     }
 }
 
@@ -1607,6 +2483,171 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+}
+
+/* Optimisations pour mobile */
+@media (max-width: 768px) {
+    /* Amélioration des performances */
+    * {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Prévention du zoom sur les inputs */
+    input[type="text"],
+    input[type="date"],
+    input[type="color"],
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+
+    /* Amélioration de l'accessibilité */
+    .task-btn,
+    .nav-btn,
+    .profile-btn,
+    .modal-btn,
+    .add-btn,
+    .clear-filters-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    /* Amélioration de la navigation */
+    .header-actions {
+        position: sticky;
+        top: 0;
+        background: var(--bg-primary);
+        z-index: 100;
+        padding: 10px 0;
+        backdrop-filter: blur(10px);
+    }
+
+    /* Amélioration des modales */
+    .modal-overlay {
+        padding: 10px;
+    }
+
+    .modal {
+        max-height: 85vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Amélioration des notifications */
+    .notification-toast {
+        position: fixed;
+        bottom: 20px;
+        top: auto;
+        left: 10px;
+        right: 10px;
+        width: auto;
+        z-index: 1000;
+    }
+
+    /* Amélioration des dropdowns */
+    .profile-dropdown {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 300px;
+        z-index: 1001;
+    }
+
+    /* Amélioration de la recherche */
+    .search-input-wrapper {
+        position: relative;
+        margin-bottom: 15px;
+    }
+
+    .search-input {
+        width: 100%;
+        padding-right: 50px;
+    }
+
+    .search-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    /* Amélioration des filtres */
+    .filters-container {
+        position: sticky;
+        top: 60px;
+        background: var(--bg-primary);
+        z-index: 99;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    /* Amélioration des cartes */
+    .task-card {
+        margin-bottom: 15px;
+        border-radius: 12px;
+    }
+
+    /* Amélioration des statistiques */
+    .summary-cards {
+        margin-bottom: 20px;
+    }
+
+    .chart-container {
+        min-height: 250px;
+    }
+
+    /* Amélioration de la barre de progression */
+    .progress-section {
+        position: sticky;
+        top: 120px;
+        background: var(--bg-primary);
+        z-index: 98;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .progress-info {
+        flex-direction: row;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .progress-text {
+        font-size: 0.9rem;
+    }
+
+    .progress-percentage {
+        font-size: 1.1rem;
+    }
+
+    .progress-bar {
+        height: 8px;
+        margin-bottom: 12px;
+    }
+
+    .task-stats {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .stat-item {
+        padding: 6px;
+        border-radius: 6px;
+    }
+
+    .stat-number {
+        font-size: 1.2rem;
+        margin-bottom: 2px;
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+    }
 }
 
 /* Notification de base pour accessibilité et fallback */
@@ -2049,5 +3090,298 @@ body {
 [data-theme="light"] .chart-card:hover,
 [data-theme="light"] .details-card:hover {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Bouton d'installation PWA */
+.install-btn-header {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border: none;
+    border-radius: 12px;
+    padding: 10px 16px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    margin-left: 12px;
+}
+
+.install-btn-header:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--shadow-color);
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+}
+
+.install-btn-header .btn-icon {
+    font-size: 1rem;
+    animation: pulse 2s infinite;
+}
+
+/* Responsive pour le bouton d'installation */
+@media (max-width: 768px) {
+    .install-btn-header {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        margin-left: 8px;
+    }
+    
+    .install-btn-header .btn-icon {
+        font-size: 0.9rem;
+    }
+}
+
+/* Système de profils */
+.profile-selector {
+    position: relative;
+    margin-right: 12px;
+}
+
+.profile-btn {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border: none;
+    border-radius: 12px;
+    padding: 10px 16px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+.profile-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+.profile-name {
+    font-weight: 600;
+    min-width: 80px;
+    text-align: center;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px var(--shadow-color);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    margin-top: 8px;
+    min-width: 200px;
+}
+
+.profile-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-list {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.profile-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-primary);
+}
+
+.profile-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.profile-item.active {
+    background: var(--accent-primary);
+    color: white;
+}
+
+.profile-item-icon {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+.profile-item-name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.profile-item-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+}
+
+.profile-actions {
+    padding: 8px 0;
+}
+
+.profile-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.profile-action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-primary);
+}
+
+/* Modal de gestion des profils */
+.profile-modal {
+    max-width: 600px;
+    width: 90%;
+}
+
+.profile-management {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.profile-form h4,
+.existing-profiles h4 {
+    margin: 0 0 16px 0;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.profile-form {
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.existing-profiles {
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.profiles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.profile-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.profile-card-icon {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+.profile-card-name {
+    flex: 1;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.profile-card-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+}
+
+.profile-card-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.profile-card-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.profile-card-btn:hover {
+    color: var(--accent-danger);
+    background: rgba(220, 38, 38, 0.1);
+}
+
+.form-actions {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Responsive pour les profils */
+@media (max-width: 768px) {
+    .profile-management {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .profile-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .profile-name {
+        min-width: 60px;
+    }
+    
+    .profile-dropdown {
+        min-width: 180px;
+    }
 }
 

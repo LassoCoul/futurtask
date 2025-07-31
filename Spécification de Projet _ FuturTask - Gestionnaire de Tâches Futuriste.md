@@ -16,32 +16,41 @@ Ce document décrit la spécification d'une application web de gestion de tâche
 ## 3. Fonctionnalités Détaillées
 
 ### 3.1. Gestion des Tâches (CRUD)
+
 - **Ajouter une tâche** : Un formulaire permettra aux utilisateurs de créer de nouvelles tâches avec les champs suivants :
-    - **Titre** (texte, obligatoire)
-    - **Description** (texte, facultatif)
-    - **Date** (date, obligatoire)
-    - **Tags** (texte, facultatif) - Système de tags avec séparation par espaces
-    - **Priorité** (liste déroulante : Basse, Moyenne, Haute, Urgente)
-    - **Statut** (automatiquement "En attente" pour les nouvelles tâches)
+  - **Titre** (texte, obligatoire)
+  - **Description** (texte, facultatif)
+  - **Date** (date, obligatoire)
+  - **Tags** (texte, facultatif) - Système de tags avec séparation par espaces
+  - **Priorité** (liste déroulante : Basse, Moyenne, Haute, Urgente)
+  - **Statut** (automatiquement "En attente" pour les nouvelles tâches)
+- **Agencement responsive du formulaire** :
+  - **Desktop (>768px)** : Titre+Date côte à côte, Description pleine largeur, Tags pleine largeur, Priorité+Bouton côte à côte (50/50)
+  - **Mobile (≤768px)** : Tous les champs en pleine largeur empilés verticalement
+  - **Champs optimisés** : Largeur 100% avec box-sizing border-box pour une utilisation optimale de l'espace
 - **Modifier une tâche** : Les utilisateurs pourront éditer les détails d'une tâche existante via une modale.
 - **Supprimer une tâche** : Possibilité de supprimer une tâche individuellement.
 - **Supprimer toutes les tâches** : Option pour effacer toutes les tâches en une seule action, avec confirmation.
 - **Marquer comme terminée/en attente** : Un bouton permettra de basculer rapidement le statut d'une tâche.
 
 ### 3.2. Système de Tags et Catégories
+
 - **Tags personnalisés** : Les utilisateurs peuvent ajouter des tags avec le préfixe `#` (ex: `#urgent #travail`)
 - **Filtrage par tags** : Possibilité de filtrer les tâches par tags spécifiques
 - **Statistiques des tags** : Analyse des tags les plus utilisés
 - **Affichage visuel** : Les tags sont affichés avec des couleurs distinctives
 
 ### 3.3. Recherche Avancée
+
 - **Recherche en temps réel** : Recherche instantanée dans tous les champs
 - **Mise en surbrillance** : Les termes recherchés sont mis en évidence
 - **Recherche multi-champs** : Titre, description et tags
 - **Compteur de résultats** : Affichage du nombre de résultats trouvés
 
 ### 3.4. Filtres Dynamiques Modernisés
+
 Les utilisateurs pourront filtrer les tâches affichées selon les critères suivants :
+
 - **Par Année** : Sélectionner une année spécifique (ex: 2025).
 - **Par Mois** : Sélectionner un mois spécifique (ex: Juillet).
 - **Par Statut** : Afficher uniquement les tâches "En attente" ou "Terminées".
@@ -50,18 +59,21 @@ Les utilisateurs pourront filtrer les tâches affichées selon les critères sui
 - **Effacer les filtres** : Un bouton pour réinitialiser tous les filtres avec design moderne
 
 ### 3.5. Système de Priorités
+
 - **Niveaux de priorité** : Basse, Moyenne, Haute, Urgente
 - **Indicateurs visuels** : Couleurs et icônes distinctives pour chaque priorité
 - **Filtrage par priorité** : Possibilité de filtrer par niveau de priorité
 - **Statistiques** : Analyse de la répartition des priorités
 
 ### 3.6. Notifications et Rappels
+
 - **Tâches en retard** : Détection automatique et notifications
 - **Échéances proches** : Rappels pour les tâches dues bientôt
 - **Toast notifications** : Notifications élégantes pour les actions utilisateur
 - **Système de rappels** : Vérification automatique toutes les 5 minutes
 
 ### 3.7. Page Statistiques Avancées
+
 - **Graphiques interactifs** : Évolution des tâches, répartition par priorité
 - **Métriques de performance** : Taux de completion, temps moyen de réalisation
 - **Analyse des tags** : Tags les plus utilisés avec compteurs
@@ -69,6 +81,7 @@ Les utilisateurs pourront filtrer les tâches affichées selon les critères sui
 - **Adaptation automatique** : Graphiques qui s'adaptent au thème actuel
 
 ### 3.8. Interface Utilisateur (UI)
+
 - **Design Futuriste et Épuré** : Inspiration néon, dark mode par défaut, avec des lignes claires et des éléments visuels modernes.
 - **Responsive Design** : L'interface s'adaptera automatiquement aux différentes tailles d'écran (mobiles, tablettes, ordinateurs).
 - **UX Fluide et Intuitive** : Navigation simple, interactions claires, et minimisation des étapes pour les actions courantes.
@@ -77,6 +90,7 @@ Les utilisateurs pourront filtrer les tâches affichées selon les critères sui
 - **Mode Clair/Sombre** : Un bouton permettra de basculer entre un thème sombre (par défaut) et un thème clair avec mise à jour instantanée.
 
 ### 3.9. Performance et Optimisations
+
 - **Mise à jour instantanée** : Interface réactive sans rechargement de page
 - **Manipulation DOM optimisée** : Utilisation de DocumentFragment pour les performances
 - **Changement de thème fluide** : Transition immédiate et sans latence
@@ -101,6 +115,7 @@ Les utilisateurs pourront filtrer les tâches affichées selon les critères sui
 ## 6. Architecture du Projet
 
 Le projet sera structuré de manière simple et modulaire :
+
 - `index.html` : Le fichier principal de l'application.
 - `stats.html` : Page dédiée aux statistiques et analyses.
 - `styles.css` : Contient toutes les règles CSS avec variables pour les thèmes.
@@ -111,18 +126,27 @@ Le projet sera structuré de manière simple et modulaire :
 ## 7. Fonctionnalités Avancées Implémentées
 
 ### 7.1. Améliorations de l'Interface
+
 - **Filtres modernisés** : Design glassmorphism avec animations fluides
 - **Recherche intelligente** : Mise en surbrillance et compteur de résultats
 - **Système de tags** : Organisation et filtrage par tags
 - **Priorités visuelles** : Indicateurs colorés pour chaque niveau
+- **Formulaire de nouvelle tâche optimisé** :
+  - **Agencement responsive** : Adaptation automatique selon la taille d'écran
+  - **Desktop optimisé** : Titre+Date et Priorité+Bouton côte à côte avec proportions équilibrées
+  - **Mobile optimisé** : Champs empilés en pleine largeur pour une utilisation optimale
+  - **Interface intuitive** : Labels clairs et placeholders informatifs
+  - **Champs optimisés** : Largeur 100% avec box-sizing border-box
 
 ### 7.2. Optimisations de Performance
+
 - **Mise à jour instantanée** : Pas de rechargement lors des actions
 - **Manipulation DOM optimisée** : Utilisation de DocumentFragment
 - **Changement de thème fluide** : Transition immédiate
 - **Visibilité optimisée** : Contrastes parfaits dans les deux thèmes
 
 ### 7.3. Fonctionnalités PWA
+
 - **Installation** : Peut être installée sur l'écran d'accueil
 - **Mode hors ligne** : Fonctionne sans connexion internet
 - **Mise à jour automatique** : Notifications de nouvelles versions
@@ -138,4 +162,3 @@ Le projet sera structuré de manière simple et modulaire :
 - **Tests de Graphiques** : Vérification de l'adaptation des couleurs selon le thème.
 
 Ce document servira de guide pour le développement de l'application FuturTask, assurant que toutes les exigences sont comprises et implémentées. L'application offre maintenant une expérience utilisateur complète et moderne avec des fonctionnalités avancées de gestion de tâches.
-

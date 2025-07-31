@@ -3,14 +3,29 @@ class StatsPage {
   constructor() {
     this.tasks = [];
     this.charts = {};
+
+    // Variables PWA
+    this.deferredPrompt = null;
+    this.isPWAInstalled = false;
+
+    // Variables de profils
+    this.profiles = [];
+    this.currentProfile = null;
+
     this.init();
   }
 
   init() {
+    this.loadProfiles();
+    this.setupProfileEventListeners();
+    this.updateProfileDisplay();
     this.loadTasks();
     this.setupEventListeners();
     this.setupTheme();
     this.updateAllStats();
+
+    // Initialiser PWA
+    this.setupPWA();
   }
 
   setupEventListeners() {
@@ -89,8 +104,36 @@ class StatsPage {
     };
   }
 
+  loadProfiles() {
+    const saved = localStorage.getItem("futurTask-profiles");
+    if (saved) {
+      try {
+        this.profiles = JSON.parse(saved);
+      } catch (error) {
+        console.error("Erreur lors du chargement des profils:", error);
+        this.profiles = [];
+      }
+    }
+
+    // Charger le profil actuel
+    const currentProfileId = localStorage.getItem("futurTask-currentProfile");
+    if (currentProfileId) {
+      this.currentProfile = this.profiles.find(
+        (p) => p.id === currentProfileId
+      );
+    }
+
+    if (!this.currentProfile && this.profiles.length > 0) {
+      this.currentProfile = this.profiles[0];
+    }
+  }
+
   loadTasks() {
-    const saved = localStorage.getItem("futurTask-tasks");
+    if (!this.currentProfile) return;
+
+    const saved = localStorage.getItem(
+      `futurTask-tasks-${this.currentProfile.id}`
+    );
     if (saved) {
       try {
         this.tasks = JSON.parse(saved);
@@ -98,6 +141,8 @@ class StatsPage {
         console.error("Erreur lors du chargement des tâches:", error);
         this.tasks = [];
       }
+    } else {
+      this.tasks = [];
     }
   }
 
@@ -517,6 +562,313 @@ class StatsPage {
     const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  // Méthodes PWA
+  setupPWA() {
+    // Écouter l'événement beforeinstallprompt
+    window.addEventListener("beforeinstallprompt", (e) => {
+      // Empêcher l'affichage automatique du prompt
+      e.preventDefault();
+
+      // Stocker l'événement pour l'utiliser plus tard
+      this.deferredPrompt = e;
+
+      // Vérifier si l'app est déjà installée
+      this.checkIfPWAInstalled();
+
+      // Afficher le bouton d'installation si nécessaire
+      this.showInstallButton();
+    });
+
+    // Écouter l'événement appinstalled
+    window.addEventListener("appinstalled", (evt) => {
+      console.log("Application installée avec succès");
+      this.isPWAInstalled = true;
+      this.hideInstallButton();
+    });
+
+    // Vérifier si l'app est déjà installée au chargement
+    this.checkIfPWAInstalled();
+  }
+
+  checkIfPWAInstalled() {
+    // Vérifier si l'app est en mode standalone (installée)
+    if (
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true
+    ) {
+      this.isPWAInstalled = true;
+      this.hideInstallButton();
+    }
+  }
+
+  showInstallButton() {
+    // Créer le bouton d'installation s'il n'existe pas
+    let installButton = document.getElementById("installButton");
+
+    if (!installButton && this.deferredPrompt && !this.isPWAInstalled) {
+      installButton = document.createElement("button");
+      installButton.id = "installButton";
+      installButton.className = "install-btn-header";
+      installButton.innerHTML = `
+        <span class="btn-icon">📱</span>
+        Installer
+      `;
+
+      // Ajouter le bouton dans le header
+      const headerActions = document.querySelector(".header-actions");
+      if (headerActions) {
+        headerActions.appendChild(installButton);
+
+        // Ajouter l'événement de clic
+        installButton.addEventListener("click", () => {
+          this.installPWA();
+        });
+      }
+    }
+  }
+
+  hideInstallButton() {
+    const installButton = document.getElementById("installButton");
+    if (installButton) {
+      installButton.remove();
+    }
+  }
+
+  async installPWA() {
+    if (!this.deferredPrompt) {
+      console.log("Aucun prompt d'installation disponible");
+      return;
+    }
+
+    // Afficher le prompt d'installation
+    this.deferredPrompt.prompt();
+
+    // Attendre la réponse de l'utilisateur
+    const { outcome } = await this.deferredPrompt.userChoice;
+
+    if (outcome === "accepted") {
+      console.log("Utilisateur a accepté l'installation");
+    } else {
+      console.log("Utilisateur a refusé l'installation");
+    }
+
+    // Réinitialiser le prompt
+    this.deferredPrompt = null;
+  }
+
+  // Méthodes de gestion des profils pour la page statistiques
+  setupProfileEventListeners() {
+    // Bouton de sélection de profil
+    document.getElementById("profileBtn").addEventListener("click", () => {
+      this.toggleProfileDropdown();
+    });
+
+    // Bouton d'ajout de profil
+    document.getElementById("addProfileBtn").addEventListener("click", () => {
+      this.showProfileModal();
+    });
+
+    // Bouton de gestion des profils
+    document
+      .getElementById("manageProfilesBtn")
+      .addEventListener("click", () => {
+        this.showProfileModal();
+      });
+
+    // Fermer le dropdown en cliquant ailleurs
+    document.addEventListener("click", (e) => {
+      const profileSelector = document.querySelector(".profile-selector");
+      if (!profileSelector.contains(e.target)) {
+        this.hideProfileDropdown();
+      }
+    });
+
+    // Formulaire de création de profil
+    document.getElementById("profileForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.createProfile();
+    });
+
+    // Fermer la modal de profil
+    document
+      .getElementById("closeProfileModal")
+      .addEventListener("click", () => {
+        this.hideProfileModal();
+      });
+
+    // Fermer la modal en cliquant sur l'overlay
+    document
+      .getElementById("profileModalOverlay")
+      .addEventListener("click", (e) => {
+        if (e.target.id === "profileModalOverlay") {
+          this.hideProfileModal();
+        }
+      });
+  }
+
+  toggleProfileDropdown() {
+    const dropdown = document.getElementById("profileDropdown");
+    dropdown.classList.toggle("active");
+
+    if (dropdown.classList.contains("active")) {
+      this.updateProfileList();
+    }
+  }
+
+  hideProfileDropdown() {
+    const dropdown = document.getElementById("profileDropdown");
+    dropdown.classList.remove("active");
+  }
+
+  updateProfileList() {
+    const profileList = document.getElementById("profileList");
+    profileList.innerHTML = "";
+
+    this.profiles.forEach((profile) => {
+      const profileItem = document.createElement("div");
+      profileItem.className = `profile-item ${
+        profile.id === this.currentProfile?.id ? "active" : ""
+      }`;
+      profileItem.innerHTML = `
+        <span class="profile-item-icon">${profile.icon}</span>
+        <span class="profile-item-name">${profile.name}</span>
+        <div class="profile-item-color" style="background-color: ${profile.color}"></div>
+      `;
+
+      profileItem.addEventListener("click", () => {
+        this.switchProfile(profile);
+      });
+
+      profileList.appendChild(profileItem);
+    });
+  }
+
+  switchProfile(profile) {
+    this.currentProfile = profile;
+    localStorage.setItem("futurTask-currentProfile", profile.id);
+    this.updateProfileDisplay();
+    this.hideProfileDropdown();
+
+    // Recharger les tâches du nouveau profil
+    this.loadTasks();
+    this.updateAllStats();
+  }
+
+  updateProfileDisplay() {
+    const profileName = document.getElementById("currentProfileName");
+    const profileBtn = document.getElementById("profileBtn");
+
+    if (this.currentProfile) {
+      profileName.textContent = this.currentProfile.name;
+      profileBtn.querySelector(".btn-icon").textContent =
+        this.currentProfile.icon;
+    } else {
+      profileName.textContent = "Profil";
+      profileBtn.querySelector(".btn-icon").textContent = "👤";
+    }
+  }
+
+  showProfileModal() {
+    document.getElementById("profileModalOverlay").classList.add("active");
+    this.updateProfilesList();
+  }
+
+  hideProfileModal() {
+    document.getElementById("profileModalOverlay").classList.remove("active");
+    document.getElementById("profileForm").reset();
+  }
+
+  createProfile() {
+    const name = document.getElementById("profileName").value.trim();
+    const color = document.getElementById("profileColor").value;
+    const icon = document.getElementById("profileIcon").value;
+
+    if (!name) {
+      alert("Veuillez entrer un nom de profil");
+      return;
+    }
+
+    // Vérifier si le nom existe déjà
+    if (
+      this.profiles.some((p) => p.name.toLowerCase() === name.toLowerCase())
+    ) {
+      alert("Un profil avec ce nom existe déjà");
+      return;
+    }
+
+    const newProfile = {
+      id: `profile_${Date.now()}`,
+      name: name,
+      icon: icon,
+      color: color,
+      createdAt: new Date().toISOString(),
+    };
+
+    this.profiles.push(newProfile);
+    localStorage.setItem("futurTask-profiles", JSON.stringify(this.profiles));
+    this.updateProfilesList();
+
+    // Basculer vers le nouveau profil
+    this.switchProfile(newProfile);
+
+    this.hideProfileModal();
+    alert(`Le profil "${name}" a été créé avec succès`);
+  }
+
+  updateProfilesList() {
+    const profilesList = document.getElementById("profilesList");
+    profilesList.innerHTML = "";
+
+    this.profiles.forEach((profile) => {
+      const profileCard = document.createElement("div");
+      profileCard.className = "profile-card";
+      profileCard.innerHTML = `
+        <span class="profile-card-icon">${profile.icon}</span>
+        <span class="profile-card-name">${profile.name}</span>
+        <div class="profile-card-color" style="background-color: ${profile.color}"></div>
+        <div class="profile-card-actions">
+          <button class="profile-card-btn" onclick="statsPage.deleteProfile('${profile.id}')" title="Supprimer le profil">🗑️</button>
+        </div>
+      `;
+
+      profilesList.appendChild(profileCard);
+    });
+  }
+
+  deleteProfile(profileId) {
+    if (this.profiles.length <= 1) {
+      alert("Impossible de supprimer le dernier profil");
+      return;
+    }
+
+    const profile = this.profiles.find((p) => p.id === profileId);
+    if (!profile) return;
+
+    if (
+      confirm(
+        `Êtes-vous sûr de vouloir supprimer le profil "${profile.name}" ? Toutes les tâches associées seront également supprimées.`
+      )
+    ) {
+      // Supprimer le profil
+      this.profiles = this.profiles.filter((p) => p.id !== profileId);
+
+      // Si c'était le profil actuel, basculer vers le premier profil
+      if (this.currentProfile?.id === profileId) {
+        this.currentProfile = this.profiles[0];
+      }
+
+      localStorage.setItem("futurTask-profiles", JSON.stringify(this.profiles));
+      this.updateProfileDisplay();
+      this.updateProfilesList();
+
+      // Recharger les tâches
+      this.loadTasks();
+      this.updateAllStats();
+
+      alert(`Le profil "${profile.name}" a été supprimé`);
+    }
   }
 }
 
